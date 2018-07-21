@@ -1,0 +1,34 @@
+﻿<Window x:Class="DawkinsWeasel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:DawkinsWeasel"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:DawkinsWeasel.ViewModels"
+        Title="Dawkins Weasel"
+        Width="1280"
+        Height="720"
+        WindowState="Maximized"
+        WindowStyle="None"
+        mc:Ignorable="d">
+
+    <!--
+        WindowState="Maximized"
+        WindowStyle="None"
+    -->
+    <Window.DataContext>
+        <vm:MainViewModel />
+    </Window.DataContext>
+    <Grid>
+        <ItemsControl HorizontalContentAlignment="Stretch"
+                      VerticalContentAlignment="Stretch"
+                      ItemsSource="{Binding CurrentPage}"
+                      UseLayoutRounding="True">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</Window>

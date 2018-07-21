@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="CancelIcon.xaml" />
+        <ResourceDictionary Source="DoneIcon.xaml" />
+        <ResourceDictionary Source="ExitIcon.xaml" />
+        <ResourceDictionary Source="RedoIcon.xaml" />
+        <ResourceDictionary Source="SettingsIcon.xaml" />
+        <ResourceDictionary Source="StartIcon.xaml" />
+        <ResourceDictionary Source="StopIcon.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

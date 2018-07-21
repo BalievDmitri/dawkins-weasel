@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DawkinsWeasel;
 using System.Windows;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace DawkinsWeasel.ViewModels
 {
-    public class NewInputPageModel : ObservableObject
+    public class NewInputPageModel : ViewModelBase
     {
         private string inputPhrase = "";
 
@@ -21,50 +23,49 @@ namespace DawkinsWeasel.ViewModels
 
         public string InputPhrase
         {
-            get
-            {
-                return inputPhrase;
-            }
-
-            set
-            {
-                inputPhrase = value;
-                RaisePropertyChangedEvent("InputPhrase");
-            }
+            get => inputPhrase;
+            set => Set(() => InputPhrase, ref inputPhrase, value);
         }
 
         Action StartMutation;
         Action OpenSettingsAction;
 
-        public ICommand Mutate
+        RelayCommand mutateCommand;
+
+        public RelayCommand Mutate
         {
             get
             {
-                return new DelegateCommand(StartMutation);
+                if (mutateCommand == null)
+                    mutateCommand = new RelayCommand(StartMutation);
+
+                return mutateCommand;
             }
         }
 
-        public ICommand OpenSettings
+        RelayCommand openSettingsCommand;
+
+        public RelayCommand OpenSettings
         {
             get
             {
-                return new DelegateCommand(OpenSettingsAction);
-                //return new DelegateCommand(() =>
-                //{
-                //    var settings = new Views.Settings();
-                //    settings.DataContext = new SettingsViewModel(settings.Close);
-                //    settings.Owner = Application.Current.MainWindow;
-                //    settings.ShowDialog();
-                //    settings = null;
-                //});
+                if (openSettingsCommand == null)
+                    openSettingsCommand = new RelayCommand(OpenSettingsAction);
+
+                return openSettingsCommand;
             }
         }
 
-        public ICommand Exit
+        RelayCommand exitCommand;
+
+        public RelayCommand Exit
         {
             get
             {
-                return new DelegateCommand(() => Application.Current.Shutdown());
+                if (exitCommand == null)
+                    exitCommand = new RelayCommand(() => Application.Current.Shutdown());
+
+                return exitCommand;
             }
         }
         

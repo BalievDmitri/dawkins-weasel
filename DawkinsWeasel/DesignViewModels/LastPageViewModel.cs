@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace DawkinsWeasel.DesignViewModels
 {
-    public class LastPageViewModel:ObservableObject
+    public class LastPageViewModel
     {
         string goal;
 
@@ -32,14 +32,6 @@ namespace DawkinsWeasel.DesignViewModels
             set
             {
                 generations = value;
-            }
-        }
-
-        public ICommand PlayAgain
-        {
-            get
-            {
-                return new DelegateCommand(() => { });
             }
         }
     }

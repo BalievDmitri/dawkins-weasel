@@ -92,14 +92,12 @@
     </ApplicationDefinition>
     <Compile Include="CustomControls\AutoScrollingListView.cs" />
     <Compile Include="CustomControls\Masking.cs" />
-    <Compile Include="DelegateCommand.cs" />
     <Compile Include="DesignViewModels\LastPageViewModel.cs" />
     <Compile Include="DesignViewModels\MutatingViewModel.cs" />
     <Compile Include="Models\MutatingString.cs" />
     <Compile Include="Models\RandomChar.cs" />
     <Compile Include="ViewModels\LastPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="ObservableObject.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MutatingViewModel.cs" />
     <Compile Include="ViewModels\NewInputPageModel.cs" />

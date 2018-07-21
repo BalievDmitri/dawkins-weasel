@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DawkinsWeasel;
 using System.Windows.Threading;
+using GalaSoft.MvvmLight;
 
 namespace DawkinsWeasel.ViewModels
 {
-    public class MainViewModel:ObservableObject
+    public class MainViewModel : ViewModelBase
     {
         Views.NewInputPage inputPage = new Views.NewInputPage();
         NewInputPageModel inputPageVM;
@@ -60,7 +61,7 @@ namespace DawkinsWeasel.ViewModels
         private void SetCurrentPage(System.Windows.Controls.Control page)
         {
             currentPage = page;
-            RaisePropertyChangedEvent("CurrentPage");
+            RaisePropertyChanged(() => CurrentPage);
         }
 
         public List<System.Windows.Controls.Control> CurrentPage

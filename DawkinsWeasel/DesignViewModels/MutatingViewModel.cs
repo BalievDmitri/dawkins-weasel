@@ -9,7 +9,7 @@ using System.Windows.Threading;
 
 namespace DawkinsWeasel.DesignViewModels
 {
-    public class MutatingViewModel:ObservableObject
+    public class MutatingViewModel
     {
         private string state = "Oh my state!";
         private ObservableCollection<string> generations = new ObservableCollection<string>();
@@ -31,7 +31,6 @@ namespace DawkinsWeasel.DesignViewModels
             set
             {
                 state = value;
-                RaisePropertyChangedEvent("State");
             }
         }
 

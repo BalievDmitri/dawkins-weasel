@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Windows.Input;
 
 namespace DawkinsWeasel.ViewModels
 {
-    public class LastPageViewModel:ObservableObject
+    public class LastPageViewModel : ViewModelBase
     {
         List<string> generations;
 
@@ -22,22 +24,20 @@ namespace DawkinsWeasel.ViewModels
         
         public List<string> Generations
         {
-            get
-            {
-                return generations;
-            }
-            set
-            {
-                generations = value;
-                RaisePropertyChangedEvent("Generations");
-            }
+            get => generations;
+            set => Set(() => Generations, ref generations, value);
         }
 
-        public ICommand PlayAgain
+        RelayCommand playAgainCommand;
+
+        public RelayCommand PlayAgain
         {
             get
             {
-                return new DelegateCommand(() => { Restart(); });
+                if (playAgainCommand == null)
+                    playAgainCommand = new RelayCommand(Restart);
+
+                return playAgainCommand;
             }
         }
     }

@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using DawkinsWeasel.Models;
 using System.Windows.Threading;
 using System.Windows.Input;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
 
 namespace DawkinsWeasel.ViewModels
 {
-    public class MutatingViewModel:ObservableObject
+    public class MutatingViewModel : ViewModelBase
     {
         private MutatingString mutator;
         private string state = "";
@@ -31,16 +33,8 @@ namespace DawkinsWeasel.ViewModels
 
         public string State
         {
-            get
-            {
-                return state;
-            }
-
-            set
-            {
-                state = value;
-                RaisePropertyChangedEvent("State");
-            }
+            get => state;
+            set => Set(() => State, ref state, value);
         }
 
         public ObservableCollection<string> Generations
@@ -58,11 +52,16 @@ namespace DawkinsWeasel.ViewModels
 
         private bool stop = false;
 
-        public ICommand Stop
+        RelayCommand stopCommand;
+
+        public RelayCommand Stop
         {
             get
             {
-                return new DelegateCommand(() => stop = true);
+                if (stopCommand == null)
+                    stopCommand = new RelayCommand(() => stop = true);
+
+                return stopCommand;
             }
         }
 

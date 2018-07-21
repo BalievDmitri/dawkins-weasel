@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,7 @@ using System.Windows.Input;
 
 namespace DawkinsWeasel.ViewModels
 {
-    public class SettingsViewModel:ObservableObject
+    public class SettingsViewModel : ViewModelBase
     {
         private string goal;
         private int children;
@@ -24,72 +26,55 @@ namespace DawkinsWeasel.ViewModels
 
         Action CloseAction;
 
-        public ICommand OK
+        RelayCommand okCommand;
+
+        public RelayCommand OK
         {
             get
             {
-                return new DelegateCommand(() =>
-                {
-                    Properties.Settings.Default.Goal = Goal;
-                    Properties.Settings.Default.Childerns = Children;
-                    Properties.Settings.Default.Probability = Probability;
-                    Properties.Settings.Default.Save();
-                    CloseAction.Invoke();
-                });
+                if (okCommand == null)
+                    okCommand = new RelayCommand(() =>
+                    {
+                        Properties.Settings.Default.Goal = Goal;
+                        Properties.Settings.Default.Childerns = Children;
+                        Properties.Settings.Default.Probability = Probability;
+                        Properties.Settings.Default.Save();
+                        CloseAction.Invoke();
+                    });
+
+                return okCommand;
             }
         }
 
-        public ICommand Cancel
+        RelayCommand cancelCommand;
+
+        public RelayCommand Cancel
         {
             get
             {
-                return new DelegateCommand(() =>
-                {
-                    CloseAction.Invoke();
-                });
+                if (cancelCommand == null)
+                    cancelCommand = new RelayCommand(CloseAction);
+
+                return cancelCommand;
             }
         }
 
         public string Goal
         {
-            get
-            {
-                return goal;
-            }
-
-            set
-            {
-                goal = value;
-                RaisePropertyChangedEvent("Goal");
-            }
+            get => goal;
+            set => Set(() => Goal, ref goal, value);
         }
 
         public int Children
         {
-            get
-            {
-                return children;
-            }
-
-            set
-            {
-                children = value;
-                RaisePropertyChangedEvent("Children");
-            }
+            get => children;
+            set => Set(() => Children, ref children, value);
         }
 
         public double Probability
         {
-            get
-            {
-                return probability;
-            }
-
-            set
-            {
-                probability = value;
-                RaisePropertyChangedEvent("Probability");
-            }
+            get => probability;
+            set => Set(() => Probability, ref probability, value);
         }
     }
 }

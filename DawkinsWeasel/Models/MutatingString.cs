@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DawkinsWeasel.Models.Settings;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -10,20 +11,21 @@ namespace DawkinsWeasel.Models
 {
     public class MutatingString
     {
-        public MutatingString(string origin, string goal)
+        public MutatingString(string origin, IMutationSettingsProvider mutationSettings)
         {
             Origin = origin;
-            Goal = goal;
+            this.mutationSettings = mutationSettings;
+            //Goal = goal;
             Initialize();
         }
+
+        IMutationSettingsProvider mutationSettings;
 
         private static RandomChar randomCharGenerator = new RandomChar();
 
         public ObservableCollection<string> Generations { get; set; } = new ObservableCollection<string>();
 
         public string State { get; private set; }
-
-        public string Goal { get; private set; }
 
         public string Origin { get; private set; }
 
@@ -43,7 +45,7 @@ namespace DawkinsWeasel.Models
         
         private void Initialize()
         {
-            if (!Goal.All(c => char.IsLetter(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c))) throw new ArgumentException("Для поля Goal допускаются только буквы и знаки пробела.");
+            if (!mutationSettings.Goal.All(c => char.IsLetter(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c))) throw new ArgumentException("Для поля Goal допускаются только буквы и знаки пробела.");
             if (!Origin.All(c => char.IsLetter(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c))) throw new ArgumentException("Для поля Origin допускаются только буквы и знаки пробела.");
 
             State = Origin;
@@ -53,13 +55,13 @@ namespace DawkinsWeasel.Models
         public void Mutate(Dispatcher dispatcher = null)
         {
             // Create C mutated strings + the current parent.
-            var candidates = (from child in Enumerable.Repeat(State, Children)
-                              select Mutate(child, Probability))
+            var candidates = (from child in Enumerable.Repeat(State, mutationSettings.Children)
+                              select Mutate(child, mutationSettings.Probability))
                               .Concat(Enumerable.Repeat(State, 1));
 
             // Sort the strings by the fitness function.
             var sorted = from candidate in candidates
-                         orderby Fitness(Goal, candidate) descending
+                         orderby Fitness(mutationSettings.Goal, candidate) descending
                          select candidate;
 
             // New parent is the most fit candidate.
@@ -70,12 +72,8 @@ namespace DawkinsWeasel.Models
                 dispatcher.Invoke(() => Generations.Add("Поколение " + Generation + ": " + State));
         }
 
-        public bool GoalReached => State == Goal ? true : false;
+        public bool GoalReached => State == mutationSettings.Goal ? true : false;
 
         public int Generation { get; private set; } = 0;
-
-        public int Children { get; set; } = 100;
-
-        public double Probability { get; set; } = 0.05;
     }
 }

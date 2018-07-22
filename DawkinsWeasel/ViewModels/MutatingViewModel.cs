@@ -9,6 +9,7 @@ using System.Windows.Threading;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
+using DawkinsWeasel.Models.Settings;
 
 namespace DawkinsWeasel.ViewModels
 {
@@ -20,11 +21,7 @@ namespace DawkinsWeasel.ViewModels
 
         public MutatingViewModel(string origin, string goal, Action goalReached)
         {
-            mutator = new MutatingString(origin, goal)
-            {
-                Children = Properties.Settings.Default.Childerns,
-                Probability = Properties.Settings.Default.Probability
-            };
+            mutator = new MutatingString(origin, new PropertiesBasedSettingsProvider());
             State = origin;
             GoalReached = goalReached;
         }

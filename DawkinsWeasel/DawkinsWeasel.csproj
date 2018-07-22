@@ -96,6 +96,7 @@
     <Compile Include="DesignViewModels\MutatingViewModel.cs" />
     <Compile Include="Models\MutatingString.cs" />
     <Compile Include="Models\RandomChar.cs" />
+    <Compile Include="Models\Settings\IMutationSettingsProvider.cs" />
     <Compile Include="ViewModels\LastPageViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />

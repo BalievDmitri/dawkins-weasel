@@ -10,80 +10,24 @@ namespace DawkinsWeasel.Models
 {
     public class MutatingString
     {
+        public MutatingString(string origin, string goal)
+        {
+            Origin = origin;
+            Goal = goal;
+            Initialize();
+        }
+
         private static RandomChar randomCharGenerator = new RandomChar();
-        private string origin;
-        private string state;
-        private string goal;
-        private int children = 100;
-        private double probability = 0.05;
-        private int generation = 0;
-        
-        private ObservableCollection<string> generations = new ObservableCollection<string>();
 
-        public ObservableCollection<string> Generations
-        {
-            get
-            {
-                return generations;
-            }
+        public ObservableCollection<string> Generations { get; set; } = new ObservableCollection<string>();
 
-            set
-            {
-                generations = value;
-            }
-        }
+        public string State { get; private set; }
 
-        public string State
-        {
-            get
-            {
-                return state;
-            }
+        public string Goal { get; private set; }
 
-            private set
-            {
-                state = value;
-            }
-        }
+        public string Origin { get; private set; }
 
-        public string Goal
-        {
-            get
-            {
-                return goal;
-            }
-
-            private set
-            {
-                goal = value;
-            }
-        }
-
-        public string Origin
-        {
-            get
-            {
-                return origin;
-            }
-
-            private set
-            {
-                origin = value;
-            }
-        }
-
-        int Fitness(string target, string current)
-        {
-            //int fit = 0;
-            //for (int i = 0; i < target.Length; i++)
-            //{
-            //    int sum = target.Skip(i).Zip(current, (a, b) => a == b ? 1 : 0).Sum();
-            //    if (sum > fit) fit = sum;
-            //}
-            //return fit - Math.Abs(target.Length - current.Length);
-            return target.Zip(current, (a, b) => a == b ? 1 : 0).Sum() - Math.Abs(target.Length - current.Length);
-            //return target.Zip(current, (a, b) => a == b ? 1 : 0).Sum();
-        }
+        int Fitness(string target, string current) => target.Zip(current, (a, b) => a == b ? 1 : 0).Sum() - Math.Abs(target.Length - current.Length);
 
         string Mutate(string current, double rate)
         {
@@ -96,15 +40,7 @@ namespace DawkinsWeasel.Models
 
             return mutation;
         }
-
-        public MutatingString(string origin, string goal)
-        {
-            Origin = origin;
-            State = state;
-            Goal = goal;
-            Initialize();
-        }
-
+        
         private void Initialize()
         {
             if (!Goal.All(c => char.IsLetter(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c))) throw new ArgumentException("Для поля Goal допускаются только буквы и знаки пробела.");
@@ -134,51 +70,12 @@ namespace DawkinsWeasel.Models
                 dispatcher.Invoke(() => Generations.Add("Поколение " + Generation + ": " + State));
         }
 
-        public bool GoalReached
-        {
-            get
-            {
-                return State == Goal ? true : false;
-            }
-        }
+        public bool GoalReached => State == Goal ? true : false;
 
-        public int Generation
-        {
-            get
-            {
-                return generation;
-            }
+        public int Generation { get; private set; } = 0;
 
-            private set
-            {
-                generation = value;
-            }
-        }
+        public int Children { get; set; } = 100;
 
-        public int Children
-        {
-            get
-            {
-                return children;
-            }
-
-            set
-            {
-                children = value;
-            }
-        }
-
-        public double Probability
-        {
-            get
-            {
-                return probability;
-            }
-
-            set
-            {
-                probability = value;
-            }
-        }
+        public double Probability { get; set; } = 0.05;
     }
 }

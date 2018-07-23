@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight;
+﻿using DawkinsWeasel.Models.Settings;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using System;
 using System.Collections.Generic;
@@ -11,70 +12,23 @@ namespace DawkinsWeasel.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {
-        private string goal;
-        private int children;
-        private double probability;
-
-
-        public SettingsViewModel(Action closeAction)
+        public SettingsViewModel(Action closeAction, IMutationSettingsEditor settingsEditor)
         {
-            goal = Properties.Settings.Default.Goal;
-            Children = Properties.Settings.Default.Childerns;
-            Probability = Properties.Settings.Default.Probability;
-            CloseAction = closeAction;
-        }
+            Settings = settingsEditor;
 
-        Action CloseAction;
-
-        RelayCommand okCommand;
-
-        public RelayCommand OK
-        {
-            get
+            OkCommand = new RelayCommand(() =>
             {
-                if (okCommand == null)
-                    okCommand = new RelayCommand(() =>
-                    {
-                        Properties.Settings.Default.Goal = Goal;
-                        Properties.Settings.Default.Childerns = Children;
-                        Properties.Settings.Default.Probability = Probability;
-                        Properties.Settings.Default.Save();
-                        CloseAction.Invoke();
-                    });
+                Settings.SaveSettings();
+                closeAction.Invoke();
+            });
 
-                return okCommand;
-            }
+            CancelCommand = new RelayCommand(closeAction);
         }
 
-        RelayCommand cancelCommand;
+        public IMutationSettingsEditor Settings { get; }
 
-        public RelayCommand Cancel
-        {
-            get
-            {
-                if (cancelCommand == null)
-                    cancelCommand = new RelayCommand(CloseAction);
+        public RelayCommand OkCommand { get; }
 
-                return cancelCommand;
-            }
-        }
-
-        public string Goal
-        {
-            get => goal;
-            set => Set(() => Goal, ref goal, value);
-        }
-
-        public int Children
-        {
-            get => children;
-            set => Set(() => Children, ref children, value);
-        }
-
-        public double Probability
-        {
-            get => probability;
-            set => Set(() => Probability, ref probability, value);
-        }
+        public RelayCommand CancelCommand { get; }
     }
 }

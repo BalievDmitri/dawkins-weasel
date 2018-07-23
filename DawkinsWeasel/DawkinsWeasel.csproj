@@ -97,6 +97,7 @@
     <Compile Include="Models\IRandomProvider.cs" />
     <Compile Include="Models\MutatingString.cs" />
     <Compile Include="Models\RandomChar.cs" />
+    <Compile Include="Models\Settings\IMutationSettingsEditor.cs" />
     <Compile Include="Models\Settings\IMutationSettingsProvider.cs" />
     <Compile Include="Models\Settings\PropertiesBasedSettingsProvider.cs" />
     <Compile Include="ViewModels\LastPageViewModel.cs" />

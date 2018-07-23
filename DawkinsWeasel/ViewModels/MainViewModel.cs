@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DawkinsWeasel;
 using System.Windows.Threading;
 using GalaSoft.MvvmLight;
+using DawkinsWeasel.Models.Settings;
 
 namespace DawkinsWeasel.ViewModels
 {
@@ -31,7 +32,7 @@ namespace DawkinsWeasel.ViewModels
         private void OpenSettings()
         {
             var settingsPage = new Views.Settings();
-            var settingsViewModel = new SettingsViewModel(Restart);
+            var settingsViewModel = new SettingsViewModel(Restart, new PropertiesBasedSettingsProvider());
             settingsPage.DataContext = settingsViewModel;
 
             SetCurrentPage(settingsPage);

@@ -29,27 +29,25 @@
                 Height="23"
                 Margin="10,59,10,0"
                 VerticalAlignment="Top"
-                Text="{Binding Goal, FallbackValue=METHINKS IT IS LIKE A WEASEL}"
+                Text="{Binding Settings.Goal, FallbackValue=METHINKS IT IS LIKE A WEASEL}"
                 TextWrapping="Wrap" />
             <Button
-                x:Name="button"
                 Width="50"
                 Height="50"
                 Margin="10,0,0,10"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                Command="{Binding OK}"
+                Command="{Binding OkCommand}"
                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                 <ContentControl Template="{StaticResource DoneIcon}" />
             </Button>
             <Button
-                x:Name="button1"
                 Width="50"
                 Height="50"
                 Margin="0,0,10,10"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Command="{Binding Cancel}"
+                Command="{Binding CancelCommand}"
                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
                 <ContentControl Template="{StaticResource CancelIcon}" />
             </Button>
@@ -66,7 +64,7 @@
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Minimum="1"
-                Value="{Binding Children, Mode=TwoWay}" />
+                Value="{Binding Settings.Children, Mode=TwoWay}" />
             <xctk:DoubleUpDown
                 Width="61"
                 Height="20"
@@ -75,7 +73,7 @@
                 VerticalAlignment="Top"
                 Maximum="1"
                 Minimum="0"
-                Value="{Binding Probability, Mode=TwoWay}" />
+                Value="{Binding Settings.Probability, Mode=TwoWay}" />
             <Label
                 x:Name="label1"
                 Margin="10,94,0,0"

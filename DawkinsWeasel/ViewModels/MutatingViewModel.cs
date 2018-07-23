@@ -21,7 +21,7 @@ namespace DawkinsWeasel.ViewModels
 
         public MutatingViewModel(string origin, string goal, Action goalReached)
         {
-            mutator = new MutatingString(origin, new PropertiesBasedSettingsProvider());
+            mutator = new MutatingString(origin, new PropertiesBasedSettingsProvider(), new RandomChar());
             State = origin;
             GoalReached = goalReached;
         }

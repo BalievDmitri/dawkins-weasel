@@ -11,17 +11,18 @@ namespace DawkinsWeasel.Models
 {
     public class MutatingString
     {
-        public MutatingString(string origin, IMutationSettingsProvider mutationSettings)
+        public MutatingString(string origin, IMutationSettingsProvider mutationSettings, IRandomProvider randomProvider)
         {
             Origin = origin;
             this.mutationSettings = mutationSettings;
             //Goal = goal;
+            randomCharGenerator = randomProvider;
             Initialize();
         }
 
         IMutationSettingsProvider mutationSettings;
 
-        private static RandomChar randomCharGenerator = new RandomChar();
+        IRandomProvider randomCharGenerator;
 
         public ObservableCollection<string> Generations { get; set; } = new ObservableCollection<string>();
 

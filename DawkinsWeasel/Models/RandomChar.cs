@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DawkinsWeasel.Models
 {
-    class RandomChar : Random
+    class RandomChar : Random, IRandomProvider
     {
         public RandomChar() : base((int)DateTime.Now.Ticks)
         {

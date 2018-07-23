@@ -94,6 +94,9 @@
     <Compile Include="CustomControls\Masking.cs" />
     <Compile Include="DesignViewModels\LastPageViewModel.cs" />
     <Compile Include="DesignViewModels\MutatingViewModel.cs" />
+    <Compile Include="Models\IRandomCharProvider.cs" />
+    <Compile Include="Models\IRandomDoubleProvider.cs" />
+    <Compile Include="Models\IRandomProvider.cs" />
     <Compile Include="Models\MutatingString.cs" />
     <Compile Include="Models\RandomChar.cs" />
     <Compile Include="Models\Settings\IMutationSettingsProvider.cs" />

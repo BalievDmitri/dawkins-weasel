@@ -8,10 +8,9 @@ namespace DawkinsWeasel.Models
 {
     class RandomChar : Random, IRandomProvider
     {
-        public RandomChar() : base((int)DateTime.Now.Ticks)
-        {
+        public RandomChar() : base() { }
 
-        }
+        public RandomChar(int seed) : base(seed) { }
 
         public char NextCharacter()
         {
